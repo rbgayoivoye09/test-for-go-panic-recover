@@ -21,7 +21,10 @@ func main() {
 	}
 	defer crashFile.Close()
 
-	debug.SetCrashOutput(crashFile, debug.CrashOptions{})
+	debug.SetCrashOutput(
+		crashFile,
+		debug.CrashOptions{},
+	)
 
 	// 设置一个 defer 函数来捕获整个程序中的 panic
 	defer func() {
