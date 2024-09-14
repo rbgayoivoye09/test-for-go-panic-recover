@@ -11,7 +11,18 @@ import (
 )
 
 func main() {
-	monitor()
+	// monitor()
+
+	// 创建或打开一个文件用于写入崩溃报告
+	crashFile, err := os.OpenFile("crash_report.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		fmt.Println("无法打开崩溃报告文件:", err)
+		return
+	}
+	defer crashFile.Close()
+
+	debug.SetCrashOutput(crashFile, debug.CrashOptions{})
+
 	// 设置一个 defer 函数来捕获整个程序中的 panic
 	defer func() {
 		if r := recover(); r != nil {
